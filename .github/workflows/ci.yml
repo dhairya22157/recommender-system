@@ -1,0 +1,65 @@
+name: CI-CD
+
+on: push
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip' 
+
+      - name: Install Packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest requests
+
+      - name: Verify Dockerfile Exists
+        run: test -f Dockerfile
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -f Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/spotify-recommender:latest \
+            -t ${{ secrets.DOCKER_USERNAME }}/spotify-recommender:${{ github.sha }} .
+
+      - name: Run Application in Docker
+        run: |
+          docker run -d \
+            --name recommender-ci \
+            -p 8000:8000 \
+            ${{ secrets.DOCKER_USERNAME }}/spotify-recommender:latest
+          sleep 30
+
+      - name: Test App
+        run: |
+          pytest test_app.py -v
+
+      - name: Stop Docker Container
+        run: |
+          docker stop recommender-ci || true
+
+      - name: Push Docker Image to Hub
+        run: |
+          docker push ${{ secrets.DOCKER_USERNAME }}/spotify-recommender:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/spotify-recommender:${{ github.sha }}
+
+      - name: Trigger Render Deployment
+        run: |
+          curl -X POST https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys \
+            -H 'Accept: application/json' \
+            -H 'Authorization: Bearer ${{ secrets.RENDER_API_KEY }}' \
+            -H 'Content-Type: application/json'
+        

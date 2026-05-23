@@ -1,0 +1,53 @@
+# Virtual environment
+venv/
+.venv/
+
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+pip-wheel-metadata/
+
+# Environment variables
+.env
+.env.*
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Testing / linters
+.pytest_cache/
+.mypy_cache/
+
+# Logs
+*.log
+
+# DVC (not using anymore - use local files only)
+.dvc/
+.dvcignore
+dvc.lock
+dvc.yaml
+
+# Exclude Raw data files (too large - don't commit)
+data/raw/User Listening History.csv
+data/raw/Music Info.csv
+/data/raw/*.csv
+
+# Keep processed data and models (needed for Docker)
+!data/processed/
+!data/models/
+!data/processed/**
+!data/models/**

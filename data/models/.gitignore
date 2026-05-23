@@ -1,0 +1,4 @@
+# Ignore nothing - all models and artifacts should be tracked
+!*.joblib
+!*.npy
+!*.npz

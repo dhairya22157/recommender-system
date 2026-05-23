@@ -1,0 +1,3 @@
+# Ignore nothing - all processed data should be tracked
+!*.csv
+!*.npz

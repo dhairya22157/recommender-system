@@ -1,0 +1,16 @@
+venv
+.venv
+.env
+__pycache__
+*.pyc
+.git
+.gitignore
+node_modules
+notebooks
+*.ipynb
+DockerFile
+build
+dist
+*.log
+*.sqlite
+data/raw
