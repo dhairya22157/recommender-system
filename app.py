@@ -25,31 +25,31 @@ HYBRID_INTERACTION_MATRIX_PATH = "data/models/collab_interaction_matrix.npz"
 HYBRID_TRANSFORMED_PATH = "data/processed/transformed_hybrid_data.npz"
 
 
-@st.cache_data
+@st.cache_resource
 def load_content_artifacts():
-    songs_data = pd.read_csv(CONTENT_DATA_PATH)
+    songs_data = pd.read_csv(CONTENT_DATA_PATH, usecols=["track_id", "name", "artist", "spotify_preview_url"])
     transformed_data = load_npz(CONTENT_TRANSFORMED_PATH)
     return songs_data, transformed_data
 
 
-@st.cache_data
+@st.cache_resource
 def load_collaborative_artifacts():
-    songs_data = pd.read_csv(COLLAB_DATA_PATH)
+    songs_data = pd.read_csv(COLLAB_DATA_PATH, usecols=["track_id", "name", "artist", "spotify_preview_url"])
     track_ids = np.load(COLLAB_TRACK_IDS_PATH, allow_pickle=True)
     interaction_matrix = load_npz(COLLAB_INTERACTION_MATRIX_PATH)
     return songs_data, track_ids, interaction_matrix
 
 
-@st.cache_data
+@st.cache_resource
 def load_hybrid_artifacts():
-    songs_data = pd.read_csv(HYBRID_DATA_PATH)
+    songs_data = pd.read_csv(HYBRID_DATA_PATH, usecols=["track_id", "name", "artist", "spotify_preview_url"])
     track_ids = np.load(HYBRID_TRACK_IDS_PATH, allow_pickle=True)
     interaction_matrix = load_npz(HYBRID_INTERACTION_MATRIX_PATH)
     transformed_matrix = load_npz(HYBRID_TRANSFORMED_PATH)
     return songs_data, track_ids, interaction_matrix, transformed_matrix
 
 
-@st.cache_data
+@st.cache_resource
 def build_song_options(data: pd.DataFrame):
     return (
         data[["track_id", "name", "artist"]]
