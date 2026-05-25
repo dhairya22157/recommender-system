@@ -9,7 +9,6 @@ A hybrid music recommendation engine that combines collaborative filtering, cont
 - [Features](#features)
 - [Architecture](#architecture)
 - [Recommendation Techniques](#recommendation-techniques)
-- [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [MLOps Workflow](#mlops-workflow)
 - [Local Setup](#local-setup)
@@ -59,16 +58,6 @@ Analyzes audio features of songs (tempo, energy, danceability, etc.) to find tra
 Combines both collaborative and content-based signals with a configurable blend weight. Users can adjust the slider from 0% (fully collaborative) to 100% (fully content-based) to tune the recommendation behavior.
 
 **Implementation:** Weighted linear combination of collaborative and content-based similarity scores.
-
-## Tech Stack
-
-- **Backend & ML**: Python 3.8+, scikit-learn, pandas, numpy, scipy
-- **UI Framework**: Streamlit
-- **Data Versioning**: DVC (Data Version Control)
-- **Containerization**: Docker
-- **CI/CD**: GitHub Actions
-- **Deployment**: Hugging Face Spaces
-- **Container Registry**: Docker Hub
 
 ## Project Structure
 
@@ -277,11 +266,3 @@ The application uses default Streamlit configurations but listens on port 7860 i
 - Experiment tracking with MLflow
 - A/B testing framework for algorithm comparison
 - Caching strategies for frequently recommended tracks
-
-## License
-
-This project is open source and available under the MIT License.
-
-## Author
-
-Developed as an ML project exploring recommendation systems and MLOps workflows.
